@@ -12,6 +12,24 @@ def clear_all():
     # set focus on the entVisitors1 entry box 
     entVisitors1.focus()
 
+# Функция добавления окна результата
+def popup_window():
+    window = tk.Toplevel()
+    window.geometry('280x300+685+400')
+    window.title('А/В результат')
+    window.resizable(False, False)
+    # Добавление кнопки закрытия окна
+    btnClosePopup = tk.Button(window, text='Закрыть',
+                    font=('Helvetica', 9, 'bold'),
+                    bg='snow',
+                    bd=3,
+                    activeforeground='navy',
+                    activebackground='snow3',
+                    relief='raised',
+                    overrelief='groove',
+                    command=window.destroy)
+    btnClosePopup.place(x=185, y=250, width=80, height=30)
+
 # Функция закрытия программмы
 def do_close():
     root.destroy()
@@ -64,7 +82,8 @@ btnProcess = tk.Button(root, text='Рассчитать',
                     activeforeground='navy',
                     activebackground='snow3',
                     relief='raised',
-                    overrelief='groove')
+                    overrelief='groove',
+                    command=popup_window)
 btnProcess.place(x=17, y=250, width=80, height=30)
 
 # Добавление кнопки "Очистить"
