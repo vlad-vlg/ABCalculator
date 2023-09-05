@@ -5,19 +5,33 @@ import tkinter as tk
 # Функция очистки полей ввода
 def clear_all():
     entVisitors1.delete(0, 'end')
+    entVisitors1.insert(tk.END, '0')
     entConversions1.delete(0, 'end')
+    entConversions1.insert(tk.END, '0')
     entVisitors2.delete(0, 'end')
+    entVisitors2.insert(tk.END, '0')
     entConversions2.delete(0, 'end')
+    entConversions2.insert(tk.END, '0')
 
     # set focus on the entVisitors1 entry box 
-    entVisitors1.focus()
+    entVisitors1.focus_set()
 
-# Функция добавления окна результата
-def popup_window():
+# Считывание данных из полей ввода
+def do_processing():
+    n1 = int(entVisitors1.get())
+    c1 = int(entConversions1.get())
+    n2 = int(entVisitors2.get())
+    c2 = int(entConversions2.get())
+    
+    popup_window(n1, c1, n2, c2)
+
+# Функция вызова окна результата
+def popup_window(n1, c1, n2, c2):
     window = tk.Toplevel()
     window.geometry('280x300+685+400')
     window.title('А/В результат')
     window.resizable(False, False)
+    
     # Добавление кнопки закрытия окна
     btnClosePopup = tk.Button(window, text='Закрыть',
                     font=('Helvetica', 9, 'bold'),
@@ -29,6 +43,9 @@ def popup_window():
                     overrelief='groove',
                     command=window.destroy)
     btnClosePopup.place(x=185, y=250, width=80, height=30)
+    
+    # Перевод фокуса на созданное окно
+    window.focus_force()
 
 # Функция закрытия программмы
 def do_close():
@@ -87,7 +104,7 @@ btnProcess = tk.Button(root, text='Рассчитать',
                     activebackground='snow3',
                     relief='raised',
                     overrelief='groove',
-                    command=popup_window)
+                    command=do_processing)
 btnProcess.place(x=17, y=250, width=80, height=30)
 
 # Добавление кнопки "Очистить"
