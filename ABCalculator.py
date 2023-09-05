@@ -1,6 +1,7 @@
 # А/В калькулятор
 
 import tkinter as tk
+from tkinter import messagebox as mb
 
 # Функция очистки полей ввода
 def clear_all():
@@ -16,13 +17,19 @@ def clear_all():
     # set focus on the entVisitors1 entry box 
     entVisitors1.focus_set()
 
-# Считывание данных из полей ввода
 def do_processing():
+    # Считывание данных из полей ввода
     n1 = int(entVisitors1.get())
     c1 = int(entConversions1.get())
     n2 = int(entVisitors2.get())
     c2 = int(entConversions2.get())
     
+    # Проверка данных из полей ввода
+    if n1 <= 0 or n2 <= 0:
+        mb.showerror(title='Ошибка', message='Неверное количество посетителей!')
+        return
+    
+    # Открытие окна результатов
     popup_window(n1, c1, n2, c2)
 
 # Функция вызова окна результата
