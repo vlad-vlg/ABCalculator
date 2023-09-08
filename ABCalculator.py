@@ -4,6 +4,8 @@ import tkinter as tk
 from tkinter import messagebox as mb
 import os
 import math
+# import pandas as pd
+# from scipy.stats import norm
 
 # Функция форматирования процентов
 def num_percent(num):
@@ -41,13 +43,13 @@ def do_processing():
 # Функция вызова окна результата
 def popup_window(n1, c1, n2, c2):
     window = tk.Toplevel()
-    window.geometry('500x500+685+400')
+    window.geometry('500x550+685+400')
     window.title('А/В результат')
     window.resizable(False, False)
     
     # Добавление окна вывода текста
     txtOutput = tk.Text(window, font=('Courier New', 10, 'bold'))
-    txtOutput.place(x=15, y=115, width=470, height=300)
+    txtOutput.place(x=15, y=115, width=470, height=350)
     
     # Добавление заголовка
     txtOutput.insert(tk.END, '                                 Контрольная    Тестовая' + os.linesep)
@@ -133,6 +135,12 @@ def popup_window(n1, c1, n2, c2):
     + '   ' + num_percent(upper2_99) + os.linesep)
     txtOutput.insert(tk.END, '---------------------------------------------------------' + os.linesep)
     
+    # Вычисление Z и P
+    z_score = (p2 - p1) / math.sqrt(sigma1 ** 2 + sigma2 ** 2)
+    txtOutput.insert(tk.END, 'Z = ' + '{:.7f}'.format(z_score) + os.linesep)
+    
+#    p_value = norm.sf(x=z_score, loc=0, scale=1)
+#     txtOutput.insert(tk.END, 'P = ' + '{:.7f}'.format(p_value) + os.linesep)
     
     # Добавление кнопки закрытия окна
     btnClosePopup = tk.Button(window, text='Закрыть',
@@ -144,7 +152,7 @@ def popup_window(n1, c1, n2, c2):
                     relief='raised',
                     overrelief='groove',
                     command=window.destroy)
-    btnClosePopup.place(x=185, y=450, width=80, height=30)
+    btnClosePopup.place(x=185, y=500, width=80, height=30)
     
     # Перевод фокуса на созданное окно
     window.focus_force()
