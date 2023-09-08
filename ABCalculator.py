@@ -52,7 +52,7 @@ def popup_window(n1, c1, n2, c2):
     # Добавление заголовка
     txtOutput.insert(tk.END, '                                 Контрольная    Тестовая' + os.linesep)
     txtOutput.insert(tk.END, '                                 группа         группа' + os.linesep)
-    txtOutput.insert(tk.END, '----------------------------------------------------------' + os.linesep)
+    txtOutput.insert(tk.END, '---------------------------------------------------------' + os.linesep)
 
     # Добавление вывода конверсии и стандартного отклонения
     p1 = c1 / n1
@@ -64,7 +64,76 @@ def popup_window(n1, c1, n2, c2):
     sigma2 = math.sqrt(p2 * (1 - p2) / n2) 
     txtOutput.insert(tk.END, 'Стандартное отклонение        ' + num_percent(sigma1)
     + '   ' + num_percent(sigma2) + os.linesep)
+    txtOutput.insert(tk.END, '---------------------------------------------------------' + os.linesep)
 
+    # Добавление вывода возможных разбросов
+    z90 = 1.645
+    lower1_90 = p1 - z90 * sigma1
+    if lower1_90 < 0:
+        lower1_90 = 0
+    upper1_90 = p1 + z90 * sigma1
+    if upper1_90 > 1:
+        upper1_90 = 1
+    
+    lower2_90 = p2 - z90 * sigma2
+    if lower2_90 < 0:
+        lower2_90 = 0
+    upper2_90 = p2 + z90 * sigma2
+    if upper2_90 > 1:
+        upper2_90 = 1
+    
+    txtOutput.insert(tk.END, '90% Возможный разброс  ' + os.linesep)
+    txtOutput.insert(tk.END, '                   От         ' + num_percent(lower1_90)
+    + '   ' + num_percent(lower2_90) + os.linesep)
+    txtOutput.insert(tk.END, '                   До         ' + num_percent(upper1_90)
+    + '   ' + num_percent(upper2_90) + os.linesep)
+    txtOutput.insert(tk.END, '---------------------------------------------------------' + os.linesep)
+
+    z95 = 1.96
+    lower1_95 = p1 - z95 * sigma1
+    if lower1_95 < 0:
+        lower1_95 = 0
+    upper1_95 = p1 + z95 * sigma1
+    if upper1_95 > 1:
+        upper1_95 = 1
+    
+    lower2_95 = p2 - z95 * sigma2
+    if lower2_95 < 0:
+        lower2_95 = 0
+    upper2_95 = p2 + z95 * sigma2
+    if upper2_95 > 1:
+        upper2_95 = 1
+    
+    txtOutput.insert(tk.END, '95% Возможный разброс  ' + os.linesep)
+    txtOutput.insert(tk.END, '                   От         ' + num_percent(lower1_95)
+    + '   ' + num_percent(lower2_95) + os.linesep)
+    txtOutput.insert(tk.END, '                   До         ' + num_percent(upper1_95)
+    + '   ' + num_percent(upper2_95) + os.linesep)
+    txtOutput.insert(tk.END, '---------------------------------------------------------' + os.linesep)
+    
+    z99 = 2.575
+    lower1_99 = p1 - z99 * sigma1
+    if lower1_99 < 0:
+        lower1_99 = 0
+    upper1_99 = p1 + z99 * sigma1
+    if upper1_99 > 1:
+        upper1_99 = 1
+    
+    lower2_99 = p2 - z99 * sigma2
+    if lower2_99 < 0:
+        lower2_99 = 0
+    upper2_99 = p2 + z99 * sigma2
+    if upper2_99 > 1:
+        upper2_99 = 1
+    
+    txtOutput.insert(tk.END, '99% Возможный разброс  ' + os.linesep)
+    txtOutput.insert(tk.END, '                   От         ' + num_percent(lower1_99)
+    + '   ' + num_percent(lower2_99) + os.linesep)
+    txtOutput.insert(tk.END, '                   До         ' + num_percent(upper1_99)
+    + '   ' + num_percent(upper2_99) + os.linesep)
+    txtOutput.insert(tk.END, '---------------------------------------------------------' + os.linesep)
+    
+    
     # Добавление кнопки закрытия окна
     btnClosePopup = tk.Button(window, text='Закрыть',
                     font=('Helvetica', 9, 'bold'),
