@@ -4,8 +4,7 @@ import tkinter as tk
 from tkinter import messagebox as mb
 import os
 import math
-# import pandas as pd
-# from scipy.stats import norm
+from scipy.stats import norm
 
 # Функция форматирования процентов
 def num_percent(num):
@@ -13,7 +12,7 @@ def num_percent(num):
 
 # Функция очистки полей ввода
 def clear_all():
-    entVisitors1.delete(0, 'end')
+    entVisitors1.delete(0, tk.END)
     entVisitors1.insert(tk.END, '0')
     entConversions1.delete(0, 'end')
     entConversions1.insert(tk.END, '0')
@@ -43,13 +42,13 @@ def do_processing():
 # Функция вызова окна результата
 def popup_window(n1, c1, n2, c2):
     window = tk.Toplevel()
-    window.geometry('500x550+685+400')
+    window.geometry('500x520+685+400')
     window.title('А/В результат')
     window.resizable(False, False)
     
     # Добавление окна вывода текста
     txtOutput = tk.Text(window, font=('Courier New', 10, 'bold'))
-    txtOutput.place(x=15, y=115, width=470, height=350)
+    txtOutput.place(x=15, y=125, width=470, height=340)
     
     # Добавление заголовка
     txtOutput.insert(tk.END, '                                 Контрольная    Тестовая' + os.linesep)
@@ -139,8 +138,51 @@ def popup_window(n1, c1, n2, c2):
     z_score = (p2 - p1) / math.sqrt(sigma1 ** 2 + sigma2 ** 2)
     txtOutput.insert(tk.END, 'Z = ' + '{:.7f}'.format(z_score) + os.linesep)
     
-#    p_value = norm.sf(x=z_score, loc=0, scale=1)
-#     txtOutput.insert(tk.END, 'P = ' + '{:.7f}'.format(p_value) + os.linesep)
+    p_value = norm.sf(x=z_score, loc=0, scale=1)
+    txtOutput.insert(tk.END, 'P = ' + '{:.7f}'.format(p_value) + os.linesep)
+    
+    # Добавление оценки результатов
+    confidence_90 = False
+    if p_value < 0.05 or p_value > 0.95:
+        confidence_90 = True
+    
+    confidence_95 = False
+    if p_value < 0.025 or p_value > 0.975:
+        confidence_95 = True
+    
+    confidence_99 = False
+    if p_value < 0.005 or p_value > 0.995:
+        confidence_99 = True
+
+    lblComment_90 = tk.Label(window, text='90% уверенность:', font=('Helvetica', 10, 'bold'), fg='#0000cc')
+    lblComment_90.place(x=25, y=25)
+    
+    if confidence_90:
+        lblResult_90 = tk.Label(window, text='ДА', font=('Helvetica', 12, 'bold'), fg='#008800')
+        lblResult_90.place(x=160, y = 25)
+    else:
+        lblResult_90 = tk.Label(window, text='НЕТ', font=('Helvetica', 12, 'bold'), fg='#ff0000')
+        lblResult_90.place(x=160, y = 25)
+    
+    lblComment_95 = tk.Label(window, text='95% уверенность:', font=('Helvetica', 10, 'bold'), fg='#0000cc')
+    lblComment_95.place(x=25, y=55)
+    
+    if confidence_95:
+        lblResult_95 = tk.Label(window, text='ДА', font=('Helvetica', 12, 'bold'), fg='#008800')
+        lblResult_95.place(x=160, y = 55)
+    else:
+        lblResult_95 = tk.Label(window, text='НЕТ', font=('Helvetica', 12, 'bold'), fg='#ff0000')
+        lblResult_95.place(x=160, y = 55)
+    
+    lblComment_99 = tk.Label(window, text='99% уверенность:', font=('Helvetica', 10, 'bold'), fg='#0000cc')
+    lblComment_99.place(x=25, y=85)
+    
+    if confidence_99:
+        lblResult_99 = tk.Label(window, text='ДА', font=('Helvetica', 12, 'bold'), fg='#008800')
+        lblResult_99.place(x=160, y = 85)
+    else:
+        lblResult_99 = tk.Label(window, text='НЕТ', font=('Helvetica', 12, 'bold'), fg='#ff0000')
+        lblResult_99.place(x=160, y = 85)
     
     # Добавление кнопки закрытия окна
     btnClosePopup = tk.Button(window, text='Закрыть',
@@ -152,7 +194,7 @@ def popup_window(n1, c1, n2, c2):
                     relief='raised',
                     overrelief='groove',
                     command=window.destroy)
-    btnClosePopup.place(x=185, y=500, width=80, height=30)
+    btnClosePopup.place(x=185, y=475, width=80, height=30)
     
     # Перевод фокуса на созданное окно
     window.focus_force()
@@ -180,13 +222,13 @@ lblVisitors1 = tk.Label(root, text='Посетители:', font=('Helvetica', 1
 lblVisitors1.place(x=25, y=85)
 entVisitors1 = tk.Entry(font=('Helvetica', 10, 'bold'), justify='center', bd=3)
 entVisitors1.place(x=140, y=85, width=100, height=20)
-entVisitors1.insert(tk.END, '255')
+entVisitors1.insert(tk.END, '0')
 
 lblConversions1 = tk.Label(root, text='Конверсии:', font=('Helvetica', 10, 'bold'))
 lblConversions1.place(x=25, y=115)
 entConversions1 = tk.Entry(font=('Helvetica', 10, 'bold'), justify='center', bd=3)
 entConversions1.place(x=140, y=115, width=100, height=20)
-entConversions1.insert(tk.END, '26')
+entConversions1.insert(tk.END, '0')
 
 # Добавление метки заголовка тестовой группы
 lblTitle2 = tk.Label(root, text='Тестовая группа', font=('Helvetica', 12, 'bold'), fg='orange')
@@ -197,13 +239,13 @@ lblVisitors2 = tk.Label(root, text='Посетители:', font=('Helvetica', 1
 lblVisitors2.place(x=25, y=175)
 entVisitors2 = tk.Entry(font=('Helvetica', 10, 'bold'), justify='center', bd=3)
 entVisitors2.place(x=140, y=175, width=100, height=20)
-entVisitors2.insert(tk.END, '235')
+entVisitors2.insert(tk.END, '0')
 
 lblConversions2 = tk.Label(root, text='Конверсии:', font=('Helvetica', 10, 'bold'))
 lblConversions2.place(x=25, y=205)
 entConversions2 = tk.Entry(font=('Helvetica', 10, 'bold'), justify='center', bd=3)
 entConversions2.place(x=140, y=205, width=100, height=20)
-entConversions2.insert(tk.END, '18')
+entConversions2.insert(tk.END, '0')
 
 # Добавление кнопки "Рассчитать"
 btnProcess = tk.Button(root, text='Рассчитать',
