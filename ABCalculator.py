@@ -282,7 +282,7 @@ entVisitors1 = tk.Entry(font=('Helvetica', 10, 'bold'),
                 justify='center',
                 bd=3)
 entVisitors1.place(x=140, y=85, width=100, height=20)
-entVisitors1.insert(tk.END, '55')
+entVisitors1.insert(tk.END, '0')
 
 lblConversions1 = tk.Label(root, text='Конверсии:',
                 font=('Helvetica', 10, 'bold'))
@@ -292,7 +292,7 @@ entConversions1 = tk.Entry(font=('Helvetica', 10, 'bold'),
                 justify='center',
                 bd=3)
 entConversions1.place(x=140, y=115, width=100, height=20)
-entConversions1.insert(tk.END, '5')
+entConversions1.insert(tk.END, '0')
 
 # Добавление метки заголовка тестовой группы
 lblTitle2 = tk.Label(root, text='Тестовая группа',
@@ -309,7 +309,7 @@ entVisitors2 = tk.Entry(font=('Helvetica', 10, 'bold'),
                 justify='center',
                 bd=3)
 entVisitors2.place(x=140, y=175, width=100, height=20)
-entVisitors2.insert(tk.END, '77')
+entVisitors2.insert(tk.END, '0')
 
 lblConversions2 = tk.Label(root, text='Конверсии:',
                 font=('Helvetica', 10, 'bold'))
@@ -319,7 +319,7 @@ entConversions2 = tk.Entry(font=('Helvetica', 10, 'bold'),
                 justify='center',
                 bd=3)
 entConversions2.place(x=140, y=205, width=100, height=20)
-entConversions2.insert(tk.END, '8')
+entConversions2.insert(tk.END, '0')
 
 # Добавление кнопки "Рассчитать"
 btnProcess = tk.Button(root, text='Рассчитать',
